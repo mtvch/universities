@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create university</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<div class="title">
+    Create university
+</div>
+<div>
+    <a href="{% url 'index' %}">Home</a>
+</div>
+<form action="{% url 'university-create' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <label for="full-name">Full name:</label><br>
+        <input type="text" id="full-name" name="full_name"><br>
+        <label for="short-name">Short name:</label><br>
+        <input type="text" id="short-name" name="short_name"><br>
+        <label for="created-at">Established at:</label><br>
+        <input type="date" id="created-at" name="created_at"><br>
+        <input type="submit" value="Create">
+    </fieldset>
+</form>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ student.full_name }}</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<div class="title">
+    <h1>Student</h1>
+</div>
+<div>
+    <a href="{% url 'index' %}">Home</a>
+</div>
+<div>
+    Full name: {{ student.full_name }}
+</div>
+<div>
+    Birth date: {{ student.birth_date.isoformat }}
+</div>
+<div>
+    Year entered: {{ student.year_entered }}
+</div>
+<div>
+    University: {{ student.university.full_name }}
+</div>
+<a href="{% url 'student-edit' student.university_id student.id %}">Edit</a>
+<form action="{% url 'student-delete' student.university_id student.id %}" method="post">
+    {% csrf_token %}
+
+    <input type="submit" value="Delete">
+</form>
+</body>
+</html>

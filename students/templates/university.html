@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ university.short_name }}</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<div class="title">
+    <h1>University</h1>
+</div>
+<div>
+    <a href="{% url 'index' %}">Home</a>
+</div>
+<div>
+    Name: {{ university.full_name }}
+</div>
+<div>
+    Short name: {{ university.short_name }}
+</div>
+<div>
+    Established at: {{ university.created_at_date.isoformat }}
+</div>
+<a href="{% url 'university-edit' university.id %}">Edit</a>
+<form action="{% url 'university-delete' university.id %}" method="post">
+    {% csrf_token %}
+
+    <input type="submit" value="Delete">
+</form>
+<a href="{% url 'student-create' university.id %}">Add student</a>
+{% if university.student_set.all %}
+    <div>
+        Students:
+    </div>
+    <ol>
+        {% for student in university.student_set.all %}
+            <li>{{ forloop.counter }}. <a
+                    href="{% url 'student' university.id student.id %}">{{ student.full_name }}</a></li>
+        {% endfor %}
+    </ol>
+{% endif %}
+</body>
+</html>
